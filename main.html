@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>С 8 марта!</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffebee;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Чтобы кнопка "Нет" не выходила за пределы экрана */
+        }
+        .container {
+            text-align: center;
+            display: none; /* Скрываем все слайды по умолчанию */
+        }
+        .container.active {
+            display: block; /* Показываем активный слайд */
+        }
+        .heart {
+            font-size: 80px; /* Уменьшим размер для мобильных */
+            color: #e91e63;
+            animation: heartbeat 1.5s infinite;
+        }
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+        .text {
+            font-size: 24px;
+            color: #e91e63;
+            margin-top: 20px;
+        }
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column; /* Кнопки в столбик для мобильных */
+            gap: 15px; /* Расстояние между кнопками */
+        }
+        .buttons button {
+            font-size: 24px; /* Увеличим размер текста */
+            padding: 15px 30px; /* Увеличим размер кнопок */
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .buttons button#yes {
+            background-color: #4caf50;
+            color: white;
+        }
+        .buttons button#no {
+            background-color: #f44336;
+            color: white;
+            position: relative;
+        }
+        .buttons button#yes:active {
+            transform: scale(1.1); /* Уменьшим масштаб для мобильных */
+        }
+    </style>
+</head>
+<body>
+    <!-- Слайд 1 -->
+    <div class="container active" id="slide1">
+        <div class="heart">❤️</div>
+        <div class="text">Любишь меня?</div>
+        <div class="buttons">
+            <button id="yes1">Да</button>
+            <button id="no1">Нет</button>
+        </div>
+    </div>
+
+    <!-- Слайд 2 -->
+    <div class="container" id="slide2">
+        <div class="heart">❤️</div>
+        <div class="text">А ты точно уверена?</div>
+        <div class="buttons">
+            <button id="yes2">Да</button>
+            <button id="no2">Нет</button>
+        </div>
+    </div>
+
+    <!-- Слайд 3 -->
+    <div class="container" id="slide3">
+        <div class="heart">❤️</div>
+        <div class="text">Ты самая лучшая!</div>
+        <div class="buttons">
+            <button id="yes3">Спасибо!</button>
+        </div>
+    </div>
+
+    <!-- Слайд 4 -->
+    <div class="container" id="slide4">
+        <div class="heart">❤️</div>
+        <div class="text">Ты согласна быть моей валентинкой?</div>
+        <div class="buttons">
+            <button id="yes4">Конечно!</button>
+            <button id="no4">Нет</button>
+        </div>
+    </div>
+
+    <!-- Слайд 5 -->
+    <div class="container" id="slide5">
+        <div class="heart">❤️</div>
+        <div class="text">Ты сделаешь меня счастливым?</div>
+        <div class="buttons">
+            <button id="yes5">Да!</button>
+            <button id="no5">Нет</button>
+        </div>
+    </div>
+
+    <!-- Слайд 6 -->
+    <div class="container" id="slide6">
+        <div class="heart">❤️</div>
+        <div class="text">Ты самая красивая!</div>
+        <div class="buttons">
+            <button id="yes6">Спасибо!</button>
+        </div>
+    </div>
+
+    <!-- Слайд 7 -->
+    <div class="container" id="slide7">
+        <div class="heart">❤️</div>
+        <div class="text">Ты согласна на свидание?</div>
+        <div class="buttons">
+            <button id="yes7">Да!</button>
+            <button id="no7">Нет</button>
+        </div>
+    </div>
+
+    <!-- Слайд 8 -->
+    <div class="container" id="slide8">
+        <div class="heart">❤️</div>
+        <div class="text">Ты моя единственная!</div>
+        <div class="buttons">
+            <button id="yes8">Я твоя!</button>
+        </div>
+    </div>
+
+    <!-- Слайд 9 (Финальный слайд) -->
+    <div class="container" id="slide9">
+        <div class="heart">❤️</div>
+        <div class="text">Спасибо, что ты есть у меня!</div>
+    </div>
+
+    <script>
+        const slides = [
+            { id: 'slide1', yes: 'yes1', no: 'no1' },
+            { id: 'slide2', yes: 'yes2', no: 'no2' },
+            { id: 'slide3', yes: 'yes3', no: null },
+            { id: 'slide4', yes: 'yes4', no: 'no4' },
+            { id: 'slide5', yes: 'yes5', no: 'no5' },
+            { id: 'slide6', yes: 'yes6', no: null },
+            { id: 'slide7', yes: 'yes7', no: 'no7' },
+            { id: 'slide8', yes: 'yes8', no: null },
+            { id: 'slide9', yes: null, no: null } // Финальный слайд без кнопок
+        ];
+
+        let currentSlide = 0;
+
+        // Функция для переключения слайдов
+        const showSlide = (index) => {
+            slides.forEach((slide, i) => {
+                const slideElement = document.getElementById(slide.id);
+                if (i === index) {
+                    slideElement.classList.add('active');
+                } else {
+                    slideElement.classList.remove('active');
+                }
+            });
+        };
+
+        // Функция для случайного смещения кнопки "Нет"
+        const moveNoButton = (noButton) => {
+            const maxX = window.innerWidth - noButton.offsetWidth;
+            const maxY = window.innerHeight - noButton.offsetHeight;
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            noButton.style.position = 'absolute'; // Меняем позиционирование
+            noButton.style.left = `${randomX}px`;
+            noButton.style.top = `${randomY}px`;
+        };
+
+        // Инициализация слайдов
+        const initSlide = (slide) => {
+            const yesButton = document.getElementById(slide.yes);
+            const noButton = slide.no ? document.getElementById(slide.no) : null;
+
+            if (yesButton) {
+                yesButton.addEventListener('click', () => {
+                    currentSlide++;
+                    if (currentSlide < slides.length) {
+                        showSlide(currentSlide);
+                    }
+                });
+
+                yesButton.addEventListener('touchend', (e) => {
+                    e.preventDefault(); // Предотвращаем стандартное поведение
+                    currentSlide++;
+                    if (currentSlide < slides.length) {
+                        showSlide(currentSlide);
+                    }
+                });
+            }
+
+            if (noButton) {
+                noButton.addEventListener('touchstart', (e) => {
+                    e.preventDefault(); // Предотвращаем стандартное поведение
+                    moveNoButton(noButton);
+                });
+
+                noButton.addEventListener('mouseover', () => {
+                    moveNoButton(noButton);
+                });
+            }
+        };
+
+        // Инициализация всех слайдов
+        slides.forEach((slide, index) => {
+            initSlide(slide);
+        });
+
+        // Показываем первый слайд
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>
